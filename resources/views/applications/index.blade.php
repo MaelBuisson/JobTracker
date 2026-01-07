@@ -16,25 +16,37 @@
         <thead class="bg-gray-50">
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Entreprise</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Poste</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Type de candidature</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-            @forelse($applications as $app)
-                <tr>
-                    <td class="px-6 py-4">{{ $app->company_name }}</td>
-                    <td class="px-6 py-4">{{ $app->job_title }}</td>
-                    <td class="px-6 py-4">{{ $app->applied_at }}</td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="3" class="px-6 py-4 text-center text-gray-500">
-                        Aucune candidature enregistrée pour le moment.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
+    @forelse($applications as $app)
+    <tr>
+        <td class="px-6 py-4 text-sm text-gray-900">{{ $app->company_name }}</td>
+        <td class="px-6 py-4 text-sm text-gray-900">{{ $app->job_title }}</td>
+        <td class="px-6 py-4 text-sm">
+            {{-- Le bonus visuel commence ici --}}
+            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                {{ $app->status === 'En attente' ? 'bg-yellow-100 text-yellow-800' : '' }}
+                {{ $app->status === 'Relancé' ? 'bg-blue-100 text-blue-800' : '' }}
+                {{ $app->status === 'Entretien' ? 'bg-green-100 text-green-800' : '' }}
+                {{ $app->status === 'Refusé' ? 'bg-red-100 text-red-800' : '' }}">
+                {{ $app->status }}
+            </span>
+            {{-- Fin du bonus --}}
+        </td>
+        <td class="px-6 py-4 text-sm text-gray-500">{{ $app->applied_at }}</td>
+    </tr>
+    @empty
+    <tr>
+        <td colspan="4" class="px-6 py-4 text-center text-gray-500 text-sm">
+            Aucune candidature enregistrée. Commencez par en ajouter une !
+        </td>
+    </tr>
+    @endforelse
+</tbody>
     </table>
 </div>
 </x-app-layout>
