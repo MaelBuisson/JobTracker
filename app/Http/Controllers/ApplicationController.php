@@ -49,24 +49,36 @@ class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $application = \App\Models\Application::findOrFail($id);
+
+        return view('applications.edit', compact('application')); 
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $application = \App\Models\Application::findOrFail($id);
 
+        $validated = $request->validate([
+            'company_name' => 'required|string|max:255',
+            'job_title'    => 'required|string|max:255',
+            'status'       => 'required|string',
+        ]);
+
+        $application->update($validated);
+
+        return redirect()->route('applications.index')
+                         ->with('success', 'Application updated successfully!');
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+       $candidature->delete();
+
+        return redirect()->route('applications.index')
+                         ->with('success', 'Candidature supprimée.');
     }
 }
