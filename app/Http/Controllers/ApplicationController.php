@@ -12,8 +12,16 @@ class ApplicationController extends Controller
      */
     public function index()
 {
-    $applications = auth()->user()->applications()->latest()->get();
-    return view('applications.index', compact('applications'));
+    $applications = \App\Models\Application::orderBy('created_at', 'desc')->get();
+
+    $stats = [
+        'total' => $applications->count(),
+        'entretiens' => $applications->where('status', 'Entretien')->count(),
+        'encours' => $applications->whereIn('status', ['En attente', 'Envoyé', 'Relancé'])->count(),
+        'refus' => $applications->where('status', 'Refusé')->count(),
+    ];
+
+    return view('applications.index', compact('applications', 'stats')); 
 }
 
     /**

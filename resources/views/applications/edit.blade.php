@@ -12,13 +12,13 @@
                 <form action="{{ route('applications.update', $application->id) }}" method="POST">
                     @csrf
                     @method('PUT') <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Company Name</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Entreprise</label>
                         <input type="text" name="company_name" value="{{ old('company_name', $application->company_name) }}" 
                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Type de candidature</label>
                         <input type="text" name="job_title" value="{{ old('job_title', $application->job_title) }}" 
                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
@@ -27,7 +27,6 @@
                         <label class="block text-gray-700 text-sm font-bold mb-2">Status</label>
                         <select name="status" class="shadow border rounded w-full py-2 px-3 text-gray-700">
                             <option value="En attente" {{ $application->status == 'En attente' ? 'selected' : '' }}>En attente</option>
-                            <option value="Envoyé" {{ $application->status == 'Envoyé' ? 'selected' : '' }}>Envoyé</option>
                             <option value="Relancé" {{ $application->status == 'Relancé' ? 'selected' : '' }}>Relancé</option>
                             <option value="Entretien" {{ $application->status == 'Entretien' ? 'selected' : '' }}>Entretien 🎉</option>
                             <option value="Refusé" {{ $application->status == 'Refusé' ? 'selected' : '' }}>Refusé</option>
